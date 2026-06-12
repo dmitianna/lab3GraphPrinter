@@ -15,6 +15,7 @@ SOURCES += \
 
 HEADERS += \
     charts/IChartCreator.h \
+    model/DataModel.h \
     parser/IParser.h \
     ioc/IOC_Contaner.h \
     mainwindow.h \
