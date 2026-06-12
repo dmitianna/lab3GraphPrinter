@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,11 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    ioc/IOC_Container.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    IParser.h \
-    mainwindow.h
+    charts/IChartCreator.h \
+    parser/IParser.h \
+    ioc/IOC_Contaner.h \
+    mainwindow.h \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

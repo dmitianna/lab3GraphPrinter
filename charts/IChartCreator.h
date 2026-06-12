@@ -1,0 +1,3 @@
+#ifndef ICHARTCREATOR_H
+#define ICHARTCREATOR_H
+#endif // ICHARTCREATOR_H
