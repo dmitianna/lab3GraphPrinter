@@ -11,7 +11,8 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     ioc/IOC_Container.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    parser/sqliteparser.cpp
 
 HEADERS += \
     charts/IChartCreator.h \
@@ -20,6 +21,7 @@ HEADERS += \
     ioc/IOC_Contaner.h \
     mainwindow.h \
     model/GraphData.h \
+    parser/sqliteparser.h
 
 
 # Default rules for deployment.
