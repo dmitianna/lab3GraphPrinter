@@ -18,6 +18,7 @@ HEADERS += \
     parser/IParser.h \
     ioc/IOC_Contaner.h \
     mainwindow.h \
+    model/GraphData.h \
 
 
 # Default rules for deployment.
