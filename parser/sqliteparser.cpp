@@ -53,7 +53,6 @@ bool SQLiteParser::parse()
         }
 
         parsed.push_back({date.toMSecsSinceEpoch(),value});
-        qDebug() << date << value;
     }
     _data = parsed;
 

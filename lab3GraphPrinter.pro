@@ -17,7 +17,9 @@ SOURCES += \
     parser/sqliteparser.cpp
 
 HEADERS += \
+    charts/AreaChartCreator.h \
     charts/IChartCreator.h \
+    charts/LineChartCreator.h \
     charts/abstractchartcreator.h \
     model/DataModel.h \
     parser/DateExtracter.h \
