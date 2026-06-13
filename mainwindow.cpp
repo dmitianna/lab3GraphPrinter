@@ -7,20 +7,42 @@
 #include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
-    _chartView = new QChartView(this);
-    setCentralWidget(_chartView);
-    QMenu* fileMenu =menuBar()->addMenu("Файл");
-    QAction* openAction =fileMenu->addAction("Открыть");
-    connect(openAction,&QAction::triggered,this,
-        [this]()
-        {
-            QString fileName =QFileDialog::getOpenFileName(this,"Выберите SQLite файл",QString(),"*.sqlite");
 
-            if(!fileName.isEmpty())
+    QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+    _model = new QFileSystemModel(this);
+
+    _model->setFilter(QDir::NoDotAndDotDot | QDir::Files);
+    _model->setNameFilters({"*.sqlite"});
+    _model->setNameFilterDisables(false);
+
+    _tableView = new QTableView(this);
+    _tableView->setModel(_model);
+    QString homePath =QDir::homePath();
+
+    _tableView->setRootIndex(_model->setRootPath(homePath));
+    _chartView = new QChartView(this);
+    splitter->addWidget(_tableView);
+    splitter->addWidget(_chartView);
+
+    setCentralWidget(splitter);
+    QItemSelectionModel* selectionModel = _tableView->selectionModel();
+    connect(
+        selectionModel,
+        &QItemSelectionModel::selectionChanged,
+        this,
+        [this](const QItemSelection& selected)
+        {
+            QModelIndexList indexes =selected.indexes();
+
+            if(indexes.isEmpty())
             {
-                emit fileSelected(fileName);
+                return;
             }
-        });
+
+            QString filePath =_model->filePath(indexes.first());
+            emit fileSelected(filePath);
+        }
+        );
     resize(1200, 700);
 }
 

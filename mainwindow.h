@@ -4,6 +4,9 @@
 #include <QtCharts/QChartView>
 #include "charts/IChartView.h"
 #include <QString>
+#include <QFileSystemModel>
+#include <QTableView>
+#include <QSplitter>
 QT_CHARTS_USE_NAMESPACE
 
 class MainWindow : public QMainWindow, public IChartView
@@ -22,6 +25,8 @@ public:
 signals:
     void fileSelected(const QString& filePath);
 private:
-    QChartView* _chartView;
+    QChartView* _chartView = nullptr;
+    QFileSystemModel* _model = nullptr;
+    QTableView* _tableView = nullptr;
 };
 #endif // MAINWINDOW_H
