@@ -5,25 +5,55 @@
 #include <QMenu>
 #include <QAction>
 #include <QFileDialog>
+#include <QToolBar>
+#include <QPushButton>
+#include <QDir>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
-
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
+    QToolBar* toolBar =new QToolBar("Main Toolbar", this);
+    QPushButton* chooseDirectoryButton = new QPushButton("Выбрать путь", this);
+    addToolBar(toolBar);
+    toolBar->addWidget(chooseDirectoryButton);
+    connect(
+        chooseDirectoryButton,
+        &QPushButton::clicked,
+        this,
+        [this]()
+        {
+            QString dirPath =
+                QFileDialog::getExistingDirectory(this,"Выберите папку");
+
+            if(dirPath.isEmpty())
+            {
+                return;
+            }
+
+            _model->setRootPath(dirPath);
+
+            _tableView->setRootIndex(_model->index(dirPath));
+        }
+        );
     _model = new QFileSystemModel(this);
 
     _model->setFilter(QDir::NoDotAndDotDot | QDir::Files);
     _model->setNameFilters({"*.sqlite"});
     _model->setNameFilterDisables(false);
 
-    _tableView = new QTableView(this);
+    _tableView = new QTableView;
     _tableView->setModel(_model);
     QString homePath =QDir::homePath();
 
     _tableView->setRootIndex(_model->setRootPath(homePath));
-    _chartView = new QChartView(this);
+    _chartView = new QChartView;
     splitter->addWidget(_tableView);
     splitter->addWidget(_chartView);
+    QList<int> sizes;
+    sizes << 500 << 700;
+    splitter->setSizes(sizes);
 
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 1);
     setCentralWidget(splitter);
     QItemSelectionModel* selectionModel = _tableView->selectionModel();
     connect(
