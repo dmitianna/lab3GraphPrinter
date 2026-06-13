@@ -1,5 +1,4 @@
 #include "DateExtracter.h"
-
 QDateTime DateExtracter::extract(const QString& raw) const
 {
     if(raw.isEmpty()) {return {};}

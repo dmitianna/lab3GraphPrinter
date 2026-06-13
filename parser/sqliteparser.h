@@ -6,7 +6,7 @@
 class SQLiteParser: public IParser
 {
 public:
-    SQLiteParser(const QString& sourcePath,const IDataExtracter<QDateTime>* extracter);
+    SQLiteParser(const QString& sourcePath, const IDataExtracter<QDateTime>*);
     QString getSourcePath() const override;
     void setSourcePath(const QString& filePath) override;
     bool parse() override;
