@@ -2,10 +2,11 @@
 #define SQLITEPARSER_H
 #include "IParser.h"
 #include "IDataExtracter.h"
+#include <QtSql>
 class SQLiteParser: public IParser
 {
 public:
-    SQLiteParser(const QString& sourcePath = "",const IDataExtracter* extracter = nullptr);
+    SQLiteParser(const QString& sourcePath,const IDataExtracter<QDateTime>* extracter);
     QString getSourcePath() const override;
     void setSourcePath(const QString& filePath) override;
     bool parse() override;
@@ -13,7 +14,7 @@ public:
 private:
     QString _sourcePath;
     QList<GraphData> _data;
-    const IDataExtracter* _extracter;
+    const IDataExtracter<QDateTime>* _extracter;
 };
 
 #endif // SQLITEPARSER_H

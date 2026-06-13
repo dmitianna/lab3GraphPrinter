@@ -1,11 +1,11 @@
 #ifndef IDATAEXTRACTER_H
 #define IDATAEXTRACTER_H
-#include "model/GraphData.h"
-#include "QStringList"
+#include <QString>
+template<typename T>
 class IDataExtracter
 {
 public:
     virtual ~IDataExtracter() = default;
-    virtual GraphData extract(const QStringList& rowData) const = 0;
+    virtual T extract(const QString& raw) const = 0;
 };
 #endif // IDATAEXTRACTER_H

@@ -1,6 +1,6 @@
 #include "sqliteparser.h"
 
-SQLiteParser::SQLiteParser(const QString&,const IDataExtracter*) {}
+SQLiteParser::SQLiteParser(const QString&, const IDataExtracter<QDateTime>*) {}
 QString SQLiteParser::getSourcePath() const
 {
     return _sourcePath;
@@ -13,7 +13,7 @@ void SQLiteParser::setSourcePath(const QString& filePath)
 
 bool SQLiteParser::parse()
 {
-    return false;
+    return 0;
 }
 
 QList<GraphData> SQLiteParser::getData() const

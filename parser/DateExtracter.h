@@ -1,9 +1,10 @@
 #ifndef DATEEXTRACTER_H
 #define DATEEXTRACTER_H
 #include "IDataExtracter.h"
-class DateExtracter : public IDataExtracter
+#include "QDate"
+class DateExtracter : public IDataExtracter<QDateTime>
 {
 public:
-    GraphData extract(const QStringList& rowData) const override;
+    QDateTime extract(const QString& raw) const override;
 };
 #endif // DATEEXTRACTER_H
