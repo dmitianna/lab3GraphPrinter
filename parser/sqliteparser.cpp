@@ -35,8 +35,28 @@ bool SQLiteParser::parse()
 
     while(query.next())
     {
-        //заглушка
+        QDateTime date =_extracter->extract(query.value(0).toString());
+
+        if(!date.isValid())
+        {
+            continue;
+        }
+
+        bool ok = false;
+
+        double value = query.value(1).toDouble(&ok);
+
+        if(!ok)
+        {
+            continue;
+        }
+
+        parsed.push_back({date.toMSecsSinceEpoch(),value});
+        qDebug() << date << value;
     }
+    _data = parsed;
+
+    db.close();
 
     return true;
 }
