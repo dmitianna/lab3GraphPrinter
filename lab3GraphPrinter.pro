@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     ioc/IOC_Container.cpp \
+    maincontroller.cpp \
     mainwindow.cpp \
     model/DataModel.cpp \
     parser/DateExtracter.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     charts/IChartView.h \
     charts/LineChartCreator.h \
     charts/abstractchartcreator.h \
+    maincontroller.h \
     model/DataModel.h \
     parser/DateExtracter.h \
     parser/IDataExtracter.h \
