@@ -54,10 +54,10 @@ void MainController::onFileSelected(const QString& filePath)
     }
 
     _model->setData(_parser->getData());
+    _view->setChartControlsEnabled(true);
 }
 
-void MainController::onChartTypeChanged(
-    int index)
+void MainController::onChartTypeChanged(int index)
 {
     if(index == 0)
     {

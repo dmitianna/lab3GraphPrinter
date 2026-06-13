@@ -10,5 +10,6 @@ public:
     virtual void cleanChart() = 0;
     virtual void showError(const QString& message) = 0;
     virtual void showStatus(const QString& message) = 0;
+    virtual void setChartControlsEnabled(bool enabled) = 0;
 };
 #endif // ICHARTVIEW_H

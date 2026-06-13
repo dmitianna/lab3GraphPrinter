@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     QPushButton* printButton =new QPushButton("Печать",this);
     toolBar->addSeparator();
     toolBar->addWidget(printButton);
-    QCheckBox* blackWhiteCheckBox =new QCheckBox("Ч/Б", this);
-    toolBar->addWidget(blackWhiteCheckBox);
+    _blackWhiteCheckBox =new QCheckBox("Ч/Б", this);
+    toolBar->addWidget(_blackWhiteCheckBox);
     connect(
         _chartTypeCombo,
         QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
         }
         );
     connect(
-        blackWhiteCheckBox,
+        _blackWhiteCheckBox,
         &QCheckBox::toggled,
         this,
         &MainWindow::blackWhiteChanged
@@ -105,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
         }
         );
     resize(1200, 700);
+    setChartControlsEnabled(false);
 }
 
 void MainWindow::displayChart(QChart* chart)
@@ -160,4 +161,9 @@ void MainWindow::printChart()
     _chartView->render(&painter);
     painter.end();
     showStatus("График сохранён в PDF");
+}
+void MainWindow::setChartControlsEnabled(bool enabled)
+{
+    _chartTypeCombo->setEnabled(enabled);
+    _blackWhiteCheckBox->setEnabled(enabled);
 }
