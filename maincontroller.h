@@ -3,7 +3,6 @@
 #include <QObject>
 #include "charts/IChartView.h"
 #include "model/DataModel.h"
-#include "charts/IChartCreator.h"
 #include "parser/IParser.h"
 class MainController : public QObject
 {
@@ -14,15 +13,14 @@ public:
 
     void setView(IChartView* view);
     void setDataModel(DataModel* model);
-    void setChartCreator(IChartCreator* creator);
     void setParser(IParser* parser);
 public slots:
     void onDataChanged();
     void onFileSelected(const QString& filePath);
+    void onChartTypeChanged(int index);
 private:
     IChartView* _view = nullptr;
     DataModel* _model = nullptr;
-    IChartCreator* _chartCreator = nullptr;
     IParser* _parser = nullptr;
 };
 #endif // MAINCONTROLLER_H

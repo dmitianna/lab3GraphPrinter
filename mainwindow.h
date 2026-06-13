@@ -7,6 +7,7 @@
 #include <QFileSystemModel>
 #include <QTableView>
 #include <QSplitter>
+#include <QComboBox>
 QT_CHARTS_USE_NAMESPACE
 
 class MainWindow : public QMainWindow, public IChartView
@@ -24,9 +25,11 @@ public:
 
 signals:
     void fileSelected(const QString& filePath);
+    void chartTypeChanged(int index);
 private:
     QChartView* _chartView = nullptr;
     QFileSystemModel* _model = nullptr;
     QTableView* _tableView = nullptr;
+    QComboBox* _chartTypeCombo = nullptr;
 };
 #endif // MAINWINDOW_H

@@ -1,13 +1,10 @@
 #include "maincontroller.h"
-
+#include "ioc/DIConfiguration.h"
+#include "charts/IChartCreator.h"
 MainController::MainController(QObject* parent): QObject(parent)
 {
 }
 
-void MainController::setChartCreator(IChartCreator* creator)
-{
-    _chartCreator = creator;
-}
 void MainController::setView(IChartView* view)
 {
     _view = view;
@@ -25,11 +22,12 @@ void MainController::setDataModel(DataModel* model)
 
 void MainController::onDataChanged()
 {
-    if(!_view ||!_model ||!_chartCreator)
+    if(!_view ||!_model)
     {
         return;
     }
-    auto chart =_chartCreator->create(_model->getData());
+    auto chartCreator = gContainer.GetObject<IChartCreator>();
+    auto chart = chartCreator->create(_model->getData());
     _view->displayChart(chart);
 }
 void MainController::setParser(IParser* parser)
@@ -56,4 +54,19 @@ void MainController::onFileSelected(const QString& filePath)
     }
 
     _model->setData(_parser->getData());
+}
+
+void MainController::onChartTypeChanged(
+    int index)
+{
+    if(index == 0)
+    {
+        DIConfiguration::switchToLineChart();
+    }
+    else
+    {
+        DIConfiguration::switchToAreaChart();
+    }
+
+    onDataChanged();
 }

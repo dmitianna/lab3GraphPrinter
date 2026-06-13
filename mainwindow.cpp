@@ -13,8 +13,19 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
     QToolBar* toolBar =new QToolBar("Main Toolbar", this);
     QPushButton* chooseDirectoryButton = new QPushButton("Выбрать путь", this);
+    _chartTypeCombo = new QComboBox(this);
+    _chartTypeCombo->addItem("Line Chart");
+    _chartTypeCombo->addItem("Area Chart");
     addToolBar(toolBar);
     toolBar->addWidget(chooseDirectoryButton);
+    toolBar->addSeparator();
+    toolBar->addWidget(_chartTypeCombo);
+    connect(
+        _chartTypeCombo,
+        QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this,
+        &MainWindow::chartTypeChanged
+        );
     connect(
         chooseDirectoryButton,
         &QPushButton::clicked,

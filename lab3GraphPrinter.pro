@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ioc/diconfiguration.cpp \
     main.cpp \
     ioc/IOC_Container.cpp \
     maincontroller.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     charts/IChartView.h \
     charts/LineChartCreator.h \
     charts/abstractchartcreator.h \
+    ioc/diconfiguration.h \
     maincontroller.h \
     model/DataModel.h \
     parser/DateExtracter.h \
