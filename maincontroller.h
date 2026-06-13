@@ -3,6 +3,7 @@
 #include <QObject>
 #include "charts/IChartView.h"
 #include "model/DataModel.h"
+#include "charts/IChartCreator.h"
 class MainController : public QObject
 {
     Q_OBJECT
@@ -12,6 +13,7 @@ public:
 
     void setView(IChartView* view);
     void setDataModel(DataModel* model);
+    void setChartCreator(IChartCreator* creator);
 
 public slots:
     void onDataChanged();
@@ -19,5 +21,6 @@ public slots:
 private:
     IChartView* _view = nullptr;
     DataModel* _model = nullptr;
+    IChartCreator* _chartCreator = nullptr;
 };
 #endif // MAINCONTROLLER_H
