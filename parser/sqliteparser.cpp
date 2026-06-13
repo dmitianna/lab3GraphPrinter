@@ -1,3 +1,3 @@
 #include "sqliteparser.h"
 
-SQLiteParser::SQLiteParser() {}
+SQLiteParser::SQLiteParser(const QString&,const IDataExtracter*) {}
