@@ -1,6 +1,7 @@
 #include "maincontroller.h"
 #include "ioc/DIConfiguration.h"
 #include "charts/IChartCreator.h"
+#include <QFileInfo>
 MainController::MainController(QObject* parent): QObject(parent)
 {
 }
@@ -43,17 +44,33 @@ void MainController::onFileSelected(const QString& filePath)
     }
 
     _parser->setSourcePath(filePath);
-
     if(!_parser->parse())
     {
         if(_view)
         {
-            _view->showError("Не удалось загрузить файл");
+            _view->cleanChart();
+            _view->showError(_parser->getLastError());
+        }
+        return;
+    }
+
+    auto data = _parser->getData();
+
+    if(data.isEmpty())
+    {
+        if(_view)
+        {
+            _view->cleanChart();
+            _view->showError("Файл не содержит данных для построения графика");
         }
         return;
     }
 
     _model->setData(_parser->getData());
+    if(_view)
+    {
+        _view->showStatus(QString("Загружен файл: %1").arg(QFileInfo(filePath).fileName()));
+    }
     _view->setChartControlsEnabled(true);
 }
 

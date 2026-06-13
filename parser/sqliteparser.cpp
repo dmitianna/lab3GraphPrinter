@@ -14,9 +14,13 @@ void SQLiteParser::setSourcePath(const QString& filePath)
 
 bool SQLiteParser::parse()
 {
-    if(!_extracter) return false;
+    if(!_extracter)
+    {
+        _lastError = "Не настроен извлекатель данных";
+        return false;
+    }
 
-    const QString connectionName ="sqlite_parser_connection";
+    const QString connectionName ="parser_connection";
     QSqlDatabase db;
 
     if(QSqlDatabase::contains(connectionName))
@@ -29,16 +33,25 @@ bool SQLiteParser::parse()
     }
     db.setDatabaseName(_sourcePath);
 
-    if(!db.open()) return false;
+    if(!db.open())
+    {
+        _lastError = db.lastError().text();
+        return false;
+    }
 
     auto tables = db.tables();
 
-    if(tables.isEmpty()) return false;
+    if(tables.isEmpty())
+    {
+        _lastError = "В базе данных отсутствуют таблицы";
+        return false;
+    }
 
     QSqlQuery query(db);
 
     if(!query.exec( "SELECT * FROM " + tables.first()))
     {
+        _lastError = query.lastError().text();
         return false;
     }
 
@@ -64,14 +77,22 @@ bool SQLiteParser::parse()
 
         parsed.push_back({date.toMSecsSinceEpoch(),value});
     }
+    if(parsed.isEmpty())
+    {
+        _lastError ="Не найдено ни одной корректной записи";
+        return false;
+    }
     _data = parsed;
     query.finish();
     db.close();
-
     return true;
 }
 
 QList<GraphData> SQLiteParser::getData() const
 {
     return _data;
+}
+QString SQLiteParser::getLastError() const
+{
+    return _lastError;
 }

@@ -125,6 +125,7 @@ void MainWindow::displayChart(QChart* chart)
 void MainWindow::cleanChart()
 {
     _chartView->setChart(nullptr);
+    _chart = nullptr;
 }
 
 void MainWindow::showError(const QString& message)

@@ -1,6 +1,5 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "mainwindow.h"
 #include "maincontroller.h"
 #include "model/DataModel.h"
 #include "parser/sqliteparser.h"

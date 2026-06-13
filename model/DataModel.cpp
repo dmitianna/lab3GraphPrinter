@@ -1,7 +1,4 @@
 #include "DataModel.h"
-
-#include "DataModel.h"
-
 DataModel::DataModel(QObject* parent): QObject(parent)
 {
 }

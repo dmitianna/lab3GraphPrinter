@@ -13,7 +13,7 @@ protected:
         QPen pen;
         if(DIConfiguration::isBlackWhite())
         {
-            series->setPen(QPen(Qt::black));
+            pen.setColor(QColor(Qt::black));
         }
         else
         {
