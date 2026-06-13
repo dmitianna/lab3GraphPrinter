@@ -1,4 +1,4 @@
-QT += core gui charts
+QT += core gui charts sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +17,8 @@ SOURCES += \
 HEADERS += \
     charts/IChartCreator.h \
     model/DataModel.h \
+    parser/DateExtracter.h \
+    parser/IDataExtracter.h \
     parser/IParser.h \
     ioc/IOC_Contaner.h \
     mainwindow.h \
