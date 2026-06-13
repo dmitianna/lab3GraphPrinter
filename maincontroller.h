@@ -18,6 +18,7 @@ public slots:
     void onDataChanged();
     void onFileSelected(const QString& filePath);
     void onChartTypeChanged(int index);
+    void onBlackWhiteChanged(bool enabled);
 private:
     IChartView* _view = nullptr;
     DataModel* _model = nullptr;

@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&window,&MainWindow::fileSelected,&controller,&MainController::onFileSelected);
     QObject::connect(&window,&MainWindow::chartTypeChanged,&controller,&MainController::onChartTypeChanged);
+    QObject::connect(&window,&MainWindow::blackWhiteChanged,&controller,&MainController::onBlackWhiteChanged);
     window.show();
     return a.exec();
 }

@@ -70,3 +70,8 @@ void MainController::onChartTypeChanged(
 
     onDataChanged();
 }
+void MainController::onBlackWhiteChanged(bool enabled)
+{
+    DIConfiguration::setBlackWhite(enabled);
+    onDataChanged();
+}

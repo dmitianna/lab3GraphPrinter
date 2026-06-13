@@ -26,6 +26,7 @@ public:
 signals:
     void fileSelected(const QString& filePath);
     void chartTypeChanged(int index);
+    void blackWhiteChanged(bool enabled);
 private slots:
     void printChart();
 private:

@@ -10,6 +10,9 @@ public:
     static void configure();
     static void switchToLineChart();
     static void switchToAreaChart();
+
+    static void setBlackWhite(bool enabled);
+    static bool isBlackWhite();
 };
 
 #endif // DICONFIGURATION_H

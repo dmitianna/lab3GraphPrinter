@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QPdfWriter>
 #include <QPainter>
+#include <QCheckBox>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
@@ -25,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     QPushButton* printButton =new QPushButton("Печать",this);
     toolBar->addSeparator();
     toolBar->addWidget(printButton);
+    QCheckBox* blackWhiteCheckBox =new QCheckBox("Ч/Б", this);
+    toolBar->addWidget(blackWhiteCheckBox);
     connect(
         _chartTypeCombo,
         QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -55,6 +58,12 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 
             _tableView->setRootIndex(_model->index(dirPath));
         }
+        );
+    connect(
+        blackWhiteCheckBox,
+        &QCheckBox::toggled,
+        this,
+        &MainWindow::blackWhiteChanged
         );
     _model = new QFileSystemModel(this);
 
@@ -105,13 +114,8 @@ void MainWindow::displayChart(QChart* chart)
         return;
     }
 
-    QChart* oldChart =_chartView->chart();
     _chartView->setChart(chart);
 
-    if(oldChart)
-    {
-        delete oldChart;
-    }
     _chart = chart;
 
     showStatus("График обновлен");

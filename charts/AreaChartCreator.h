@@ -2,7 +2,7 @@
 #define AREACHARTCREATOR_H
 
 #include "abstractchartcreator.h"
-
+#include "ioc/diconfiguration.h"
 #include <QtCharts/QAreaSeries>
 #include <QtCharts/QLineSeries>
 
@@ -21,7 +21,13 @@ protected:
         {
             lowerSeries->append(point.xAxis,0);
         }
-        return new QAreaSeries(upperSeries,lowerSeries);
+        auto* areaSeries = new QAreaSeries(upperSeries,lowerSeries);
+        if(DIConfiguration::isBlackWhite())
+        {
+            //areaSeries->setPen(QPen(Qt::NoPen));
+            areaSeries->setBrush(QBrush(Qt::black));
+        }
+        return areaSeries;
     }
 
     QString getChartTitle() const override
