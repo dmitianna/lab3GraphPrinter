@@ -1,6 +1,7 @@
 #include "sqliteparser.h"
 #include <QtSql>
-SQLiteParser::SQLiteParser(const QString& sourcePath, const IDataExtracter<QDateTime>* extracter): _sourcePath(sourcePath),_extracter(extracter) {}
+#include <memory>
+SQLiteParser::SQLiteParser(const QString& sourcePath, std::shared_ptr<IDataExtracter<QDateTime>> extracter): _sourcePath(sourcePath),_extracter(std::move(extracter)) {}
 QString SQLiteParser::getSourcePath() const
 {
     return _sourcePath;

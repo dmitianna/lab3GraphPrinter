@@ -12,6 +12,7 @@ SOURCES += \
     main.cpp \
     ioc/IOC_Container.cpp \
     mainwindow.cpp \
+    model/DataModel.cpp \
     parser/DateExtracter.cpp \
     parser/sqliteparser.cpp
 

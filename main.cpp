@@ -9,9 +9,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //MainWindow w;
     //w.show();
-    DateExtracter extracter;
+    auto extracter = std::make_shared<DateExtracter>();
 
-    SQLiteParser parser("C:/Users/dmiti/Documents/repositories/lab3GraphPrinter/InputData/BLOOD_SUGAR.sqlite",&extracter);
+    SQLiteParser parser("C:/Users/dmiti/Documents/repositories/lab3GraphPrinter/InputData/BLOOD_SUGAR.sqlite",extracter);
 
     if(parser.parse())
     {
