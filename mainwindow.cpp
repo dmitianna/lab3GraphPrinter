@@ -1,10 +1,26 @@
 #include "mainwindow.h"
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     _chartView = new QChartView(this);
     setCentralWidget(_chartView);
+    QMenu* fileMenu =menuBar()->addMenu("Файл");
+    QAction* openAction =fileMenu->addAction("Открыть");
+    connect(openAction,&QAction::triggered,this,
+        [this]()
+        {
+            QString fileName =QFileDialog::getOpenFileName(this,"Выберите SQLite файл",QString(),"*.sqlite");
+
+            if(!fileName.isEmpty())
+            {
+                emit fileSelected(fileName);
+            }
+        });
     resize(1200, 700);
 }
 

@@ -3,7 +3,7 @@
 #include <QMainWindow>
 #include <QtCharts/QChartView>
 #include "charts/IChartView.h"
-
+#include <QString>
 QT_CHARTS_USE_NAMESPACE
 
 class MainWindow : public QMainWindow, public IChartView
@@ -18,6 +18,9 @@ public:
     void cleanChart() override;
     void showError(const QString& message) override;
     void showStatus(const QString& message) override;
+
+signals:
+    void fileSelected(const QString& filePath);
 private:
     QChartView* _chartView;
 };

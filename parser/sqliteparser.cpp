@@ -16,7 +16,17 @@ bool SQLiteParser::parse()
 {
     if(!_extracter) return false;
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    const QString connectionName ="sqlite_parser_connection";
+    QSqlDatabase db;
+
+    if(QSqlDatabase::contains(connectionName))
+    {
+        db =QSqlDatabase::database(connectionName);
+    }
+    else
+    {
+        db =QSqlDatabase::addDatabase("QSQLITE",connectionName);
+    }
     db.setDatabaseName(_sourcePath);
 
     if(!db.open()) return false;
@@ -25,7 +35,7 @@ bool SQLiteParser::parse()
 
     if(tables.isEmpty()) return false;
 
-    QSqlQuery query;
+    QSqlQuery query(db);
 
     if(!query.exec( "SELECT * FROM " + tables.first()))
     {
@@ -55,7 +65,7 @@ bool SQLiteParser::parse()
         parsed.push_back({date.toMSecsSinceEpoch(),value});
     }
     _data = parsed;
-
+    query.finish();
     db.close();
 
     return true;

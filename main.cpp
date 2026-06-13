@@ -19,14 +19,15 @@ int main(int argc, char *argv[])
     controller.setChartCreator(&creator);
 
     auto extracter =std::make_shared<DateExtracter>();
+    SQLiteParser parser("",extracter);
 
-    SQLiteParser parser("C:/Users/dmiti/Documents/repositories/lab3GraphPrinter/InputData/BLOOD_SUGAR.sqlite",extracter);
+    controller.setView(&window);
+    controller.setDataModel(&model);
+    controller.setChartCreator(&creator);
+    controller.setParser(&parser);
 
-    if(!parser.parse())
-    {
-        return -1;
-    }
-    model.setData(parser.getData());
+    QObject::connect(&window,&MainWindow::fileSelected,&controller,&MainController::onFileSelected);
+
     window.show();
     return a.exec();
 }
