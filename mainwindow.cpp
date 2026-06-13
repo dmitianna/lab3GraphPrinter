@@ -8,6 +8,8 @@
 #include <QToolBar>
 #include <QPushButton>
 #include <QDir>
+#include <QPdfWriter>
+#include <QPainter>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
@@ -20,11 +22,20 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     toolBar->addWidget(chooseDirectoryButton);
     toolBar->addSeparator();
     toolBar->addWidget(_chartTypeCombo);
+    QPushButton* printButton =new QPushButton("Печать",this);
+    toolBar->addSeparator();
+    toolBar->addWidget(printButton);
     connect(
         _chartTypeCombo,
         QOverload<int>::of(&QComboBox::currentIndexChanged),
         this,
         &MainWindow::chartTypeChanged
+        );
+    connect(
+        printButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::printChart
         );
     connect(
         chooseDirectoryButton,
@@ -89,7 +100,21 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 
 void MainWindow::displayChart(QChart* chart)
 {
+    if(!chart)
+    {
+        return;
+    }
+
+    QChart* oldChart =_chartView->chart();
     _chartView->setChart(chart);
+
+    if(oldChart)
+    {
+        delete oldChart;
+    }
+    _chart = chart;
+
+    showStatus("График обновлен");
 }
 
 void MainWindow::cleanChart()
@@ -107,3 +132,28 @@ void MainWindow::showStatus(const QString& message)
     statusBar()->showMessage(message);
 }
 
+void MainWindow::printChart()
+{
+    if(!_chart)
+    {
+        showError("Нет графика для печати");
+        return;
+    }
+
+    if(_chart->series().isEmpty())
+    {
+        showError("Нет графика для печати");
+        return;
+    }
+
+    QString filePath =QFileDialog::getSaveFileName(this,"Сохранить график","","PDF (*.pdf)");
+    if(filePath.isEmpty())
+    {
+        return;
+    }
+    QPdfWriter pdfWriter(filePath);
+    QPainter painter(&pdfWriter);
+    _chartView->render(&painter);
+    painter.end();
+    showStatus("График сохранён в PDF");
+}

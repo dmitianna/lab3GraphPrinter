@@ -26,10 +26,13 @@ public:
 signals:
     void fileSelected(const QString& filePath);
     void chartTypeChanged(int index);
+private slots:
+    void printChart();
 private:
     QChartView* _chartView = nullptr;
     QFileSystemModel* _model = nullptr;
     QTableView* _tableView = nullptr;
     QComboBox* _chartTypeCombo = nullptr;
+    QChart* _chart = nullptr;
 };
 #endif // MAINWINDOW_H
