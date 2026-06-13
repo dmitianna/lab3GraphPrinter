@@ -18,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     charts/IChartCreator.h \
+    charts/abstractchartcreator.h \
     model/DataModel.h \
     parser/DateExtracter.h \
     parser/IDataExtracter.h \
