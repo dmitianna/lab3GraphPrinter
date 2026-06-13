@@ -19,6 +19,7 @@ SOURCES += \
 HEADERS += \
     charts/AreaChartCreator.h \
     charts/IChartCreator.h \
+    charts/IChartView.h \
     charts/LineChartCreator.h \
     charts/abstractchartcreator.h \
     model/DataModel.h \
