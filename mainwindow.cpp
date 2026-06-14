@@ -11,23 +11,34 @@
 #include <QPdfWriter>
 #include <QPainter>
 #include <QCheckBox>
+#include <QLabel>
+#include <QSizePolicy>
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     QSplitter* splitter = new QSplitter(Qt::Horizontal, this);
     QToolBar* toolBar =new QToolBar("Main Toolbar", this);
+    toolBar->setMovable(false);
     QPushButton* chooseDirectoryButton = new QPushButton("Выбрать путь", this);
     _chartTypeCombo = new QComboBox(this);
     _chartTypeCombo->addItem("Line Chart");
     _chartTypeCombo->addItem("Area Chart");
+    QWidget* leftSpacer = new QWidget(this);
+    QWidget* rightSpacer = new QWidget(this);
+    leftSpacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    rightSpacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QLabel* chartLabel = new QLabel("Выберите тип диаграммы ", this);
     addToolBar(toolBar);
+    QPushButton* printButton =new QPushButton("Печать графика",this);
+    _blackWhiteCheckBox =new QCheckBox("Черно-белый график ", this);
     toolBar->addWidget(chooseDirectoryButton);
-    toolBar->addSeparator();
+    toolBar->addWidget(leftSpacer);
+    toolBar->addWidget(chartLabel);
     toolBar->addWidget(_chartTypeCombo);
-    QPushButton* printButton =new QPushButton("Печать",this);
+    toolBar->addSeparator();
+    toolBar->addWidget(_blackWhiteCheckBox);
     toolBar->addSeparator();
     toolBar->addWidget(printButton);
-    _blackWhiteCheckBox =new QCheckBox("Ч/Б", this);
-    toolBar->addWidget(_blackWhiteCheckBox);
+    toolBar->addWidget(rightSpacer);
     connect(
         _chartTypeCombo,
         QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -68,14 +79,13 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     _model = new QFileSystemModel(this);
 
     _model->setFilter(QDir::NoDotAndDotDot | QDir::Files);
-    _model->setNameFilters({"*.sqlite"});
-    _model->setNameFilterDisables(false);
 
     _tableView = new QTableView;
     _tableView->setModel(_model);
-    QString homePath =QDir::homePath();
 
-    _tableView->setRootIndex(_model->setRootPath(homePath));
+    QString homePath = QDir::homePath();
+    _model->setRootPath(homePath);
+    _tableView->setRootIndex(_model->index(homePath));
     _chartView = new QChartView;
     splitter->addWidget(_tableView);
     splitter->addWidget(_chartView);
@@ -106,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
         );
     resize(1200, 700);
     setChartControlsEnabled(false);
+    showStatus("Выберите файл БД");
 }
 
 void MainWindow::displayChart(QChart* chart)

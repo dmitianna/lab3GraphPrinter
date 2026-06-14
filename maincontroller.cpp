@@ -38,12 +38,17 @@ void MainController::setParser(IParser* parser)
 
 void MainController::onFileSelected(const QString& filePath)
 {
-    if(!_parser || !_model)
+    if(!_parser || !_model || !_view)
     {
         return;
     }
-
     _parser->setSourcePath(filePath);
+    QFileInfo info(filePath);
+    if(info.suffix().toLower() != "sqlite")
+    {
+        _view->showError("Формат файла не поддерживается");
+        return;
+    }
     if(!_parser->parse())
     {
         if(_view)
