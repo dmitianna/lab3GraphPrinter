@@ -3,6 +3,15 @@
 #include "IParser.h"
 #include "IDataExtracter.h"
 #include <QtSql>
+namespace ParserMessages
+{
+const QString NoExtractor ="Не настроен извлекатель данных";
+
+const QString NoTables ="В базе данных отсутствуют таблицы";
+
+const QString NoValidRecords ="Не найдено ни одной корректной записи";
+}
+
 class SQLiteParser: public IParser
 {
 public:

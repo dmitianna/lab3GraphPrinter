@@ -10,6 +10,11 @@
 #include <QComboBox>
 #include <QCheckBox>
 QT_CHARTS_USE_NAMESPACE
+    namespace ViewMessages
+{
+    const QString NoChartForPrint = "Нет графика для печати";
+}
+
 
 class MainWindow : public QMainWindow, public IChartView
 {
@@ -28,6 +33,7 @@ signals:
     void fileSelected(const QString& filePath);
     void chartTypeChanged(int index);
     void blackWhiteChanged(bool enabled);
+    void directoryChanged();
 private slots:
     void printChart();
 private:

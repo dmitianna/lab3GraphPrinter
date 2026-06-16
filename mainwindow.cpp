@@ -153,13 +153,13 @@ void MainWindow::printChart()
 {
     if(!_chart)
     {
-        showError("Нет графика для печати");
+        showError(ViewMessages::NoChartForPrint);
         return;
     }
 
     if(_chart->series().isEmpty())
     {
-        showError("Нет графика для печати");
+        showError(ViewMessages::NoChartForPrint);
         return;
     }
 

@@ -4,6 +4,12 @@
 #include "charts/IChartView.h"
 #include "model/DataModel.h"
 #include "parser/IParser.h"
+
+namespace ControllerMessages
+{
+const QString UnsupportedFormat ="Поддерживаются только файлы SQLite";
+const QString EmptyData ="Файл не содержит данных для построения графика";
+}
 class MainController : public QObject
 {
     Q_OBJECT

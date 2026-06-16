@@ -46,7 +46,7 @@ void MainController::onFileSelected(const QString& filePath)
     QFileInfo info(filePath);
     if(info.suffix().toLower() != "sqlite")
     {
-        _view->showError("Формат файла не поддерживается");
+        _view->showError(ControllerMessages::UnsupportedFormat);
         return;
     }
     if(!_parser->parse())
@@ -66,7 +66,7 @@ void MainController::onFileSelected(const QString& filePath)
         if(_view)
         {
             _view->cleanChart();
-            _view->showError("Файл не содержит данных для построения графика");
+            _view->showError(ControllerMessages::EmptyData);
         }
         return;
     }

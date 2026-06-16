@@ -16,7 +16,7 @@ bool SQLiteParser::parse()
 {
     if(!_extracter)
     {
-        _lastError = "Не настроен извлекатель данных";
+        _lastError = ParserMessages::NoExtractor;
         return false;
     }
 
@@ -43,7 +43,7 @@ bool SQLiteParser::parse()
 
     if(tables.isEmpty())
     {
-        _lastError = "В базе данных отсутствуют таблицы";
+        _lastError = ParserMessages::NoTables;
         return false;
     }
 
@@ -79,7 +79,7 @@ bool SQLiteParser::parse()
     }
     if(parsed.isEmpty())
     {
-        _lastError ="Не найдено ни одной корректной записи";
+        _lastError = ParserMessages::NoValidRecords;
         return false;
     }
     _data = parsed;
